@@ -4,7 +4,7 @@ import { Character } from '../../../types/character.type';
 
 @Component({
   selector: 'dragonball-character-list',
-  templateUrl: './character-list.component.html',
+  templateUrl: './character-list.html',
 })
 export class CharacterListComponent {
   listName: InputSignal<string> = input.required<string>();
