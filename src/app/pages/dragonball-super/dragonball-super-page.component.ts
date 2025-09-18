@@ -1,7 +1,7 @@
-import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CharacterListComponent } from "../../components/dragonball/character-list/character-list";
-import { Character } from '../../types/character.type';
 import { CharacterAdd } from "../../components/character-add/character-add";
+import { DragonballService } from '../../services/dragonball.service';
 
 @Component({
   selector: 'app-dragonball-super',
@@ -10,17 +10,12 @@ import { CharacterAdd } from "../../components/character-add/character-add";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DragonballSuperPageComponent {
+  // Traditional Injection by constructor
+  // constructor(
+  //   public dragonballService: DragonballService
+  // ) { }
 
-  name = signal<string>('Gohan');
-  powerLevel = signal<number>(0);
+  // New way to inject recomendation for angular team
+  protected dragonballService = inject(DragonballService);
 
-  characters = signal<Character[]>([
-    { id: 1, name: 'Goku', powerLevel: 9001 },
-    { id: 2, name: 'Vegeta', powerLevel: 8500 }
-  ]);
-
-  protected addCharacter(character: Character): void {
-    console.log({ character });
-    this.characters.update((list) => [...list, character]);
-  }
 }
