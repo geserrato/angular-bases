@@ -1,26 +1,29 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Character } from './../../types/character.type';
+import { ChangeDetectionStrategy, Component, output, signal } from '@angular/core';
 
 @Component({
-  selector: 'app-character-app',
+  selector: 'app-character-add',
   imports: [],
-  templateUrl: './character-app.html',
+  templateUrl: './character-add.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CharacterAppComponent {
+export class CharacterAdd {
   name = signal<string>('');
   powerLevel = signal<number>(0);
 
+  newCharacter = output<Character>();
 
   protected addCharecter(): void {
     if (this.name() === '' || this.powerLevel() <= 0) return;
 
     const newCharacter: Character = {
-      id: this.characters().length + 1,
+      id: Math.floor(Math.random() * 1000),
       name: this.name(),
       powerLevel: this.powerLevel()
-    };
+    }
 
-    this.characters.update(characters => [...characters, newCharacter]);
+    this.newCharacter.emit(newCharacter);
+
     this.name.set('');
     this.powerLevel.set(0);
   }

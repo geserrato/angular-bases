@@ -1,11 +1,13 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CharacterListComponent } from "../../components/dragonball/character-list/character-list";
 import { Character } from '../../types/character.type';
+import { CharacterAdd } from "../../components/character-add/character-add";
 
 @Component({
   selector: 'app-dragonball-super',
-  imports: [CharacterListComponent],
+  imports: [CharacterListComponent, CharacterAdd],
   templateUrl: './dragonball-super-page.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DragonballSuperPageComponent {
 
@@ -17,17 +19,8 @@ export class DragonballSuperPageComponent {
     { id: 2, name: 'Vegeta', powerLevel: 8500 }
   ]);
 
-  protected addCharecter(): void {
-    if (this.name() === '' || this.powerLevel() <= 0) return;
-
-    const newCharacter: Character = {
-      id: this.characters().length + 1,
-      name: this.name(),
-      powerLevel: this.powerLevel()
-    };
-
-    this.characters.update(characters => [...characters, newCharacter]);
-    this.name.set('');
-    this.powerLevel.set(0);
+  protected addCharacter(character: Character): void {
+    console.log({ character });
+    this.characters.update((list) => [...list, character]);
   }
 }
